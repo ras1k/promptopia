@@ -9,6 +9,7 @@ const Nav = () => {
     const isUserLoggedIn = true;
 
     const [providers, setProviders] = useState(null);
+    const [toggleDropdown, setToggleDropdown] = useState(false);
 
     useEffect(() => {
         const setProviders = async () => {
@@ -50,6 +51,46 @@ const Nav = () => {
                                 alt='profile'
                             />
                         </Link>
+                    </div>
+                ) : (
+                    <>
+                        {providers && Object.values(providers).map((provider) => (
+                            <button
+                                type='button'
+                                key={provider.name}
+                                onClick={() => signIn(provider.id)}
+                                className='black_btn'
+                            >
+                                Sign In
+                            </button>
+                        ))}
+                    </>
+                )}
+            </div>
+
+            <div className='sm:hidden flex relative'>
+                {isUserLoggedIn ? (
+                    <div className='flex'>
+                        <Image
+                            src='/assets/images/profile.svg'
+                            width={37}
+                            height={37}
+                            className='rounded-full'
+                            alt='profile'
+                            onClick={() => setToggleDropdown((prev) => !prev)}
+                        />
+
+                        {toggleDropdown && (
+                            <div className='dropdown'>
+                                <Link 
+                                href='/profile'
+                                className='dropdown_item'
+                                onClick={() => setToggleDropdown(false)}
+                                >
+                                My Profile
+                                </Link>
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <>
